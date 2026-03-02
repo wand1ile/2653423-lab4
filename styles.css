@@ -1,0 +1,35 @@
+.spinner {
+    /* Your styling */
+    animation: spin 1s linear infinite; /* Required */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.country-card{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;    
+}
+
+.border-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
