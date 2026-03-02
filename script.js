@@ -60,8 +60,8 @@ async function searchCountry(countryName) {
     countryInfo.innerHTML = "";
     borderingCountries.innerHTML = "";
     errorMessage.textContent = "";
-    errorMessage.classList.add("hidden");
-    loadingSpinner.classList.remove("hidden");
+    errorMessage.style.display = "none";
+    loadingSpinner.style.display = "block";
 
     try {
         if (!countryName || countryName.trim() === "") {
@@ -75,9 +75,9 @@ async function searchCountry(countryName) {
         await displayBorderCountries(country.borders);
     } catch (error) {
         errorMessage.textContent = error.message;
-        errorMessage.classList.remove("hidden");
+        errorMessage.style.display = "block";
     } finally {
-        loadingSpinner.classList.add("hidden");
+        loadingSpinner.style.display = "none";
     }
 }
 

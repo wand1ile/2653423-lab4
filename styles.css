@@ -1,6 +1,12 @@
 .spinner {
-    /* Your styling */
-    animation: spin 1s linear infinite; /* Required */
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+    display: none; /* Add this to hide by default */
 }
 
 @keyframes spin {
@@ -28,6 +34,7 @@
     padding: 10px;
     border-radius: 6px;
     margin-top: 20px;
+    display: none;
 }
 
 .hidden {
