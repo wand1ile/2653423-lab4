@@ -6,7 +6,7 @@
     border-radius: 50%;
     margin: 20px auto;
     animation: spin 1s linear infinite;
-    display: none; /* Add this to hide by default */
+    display: none; 
 }
 
 @keyframes spin {
