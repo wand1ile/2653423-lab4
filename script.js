@@ -24,7 +24,7 @@ async function fetchBorderCountry(code) {
     }
 
     const data = await response.json();
-    return data;
+    return Array.isArray(data) ? data[0] : data;
 }
 
 function displayCountry(country) {
@@ -33,7 +33,7 @@ function displayCountry(country) {
         <p><strong>Capital:</strong> ${country.capital ? country.capital[0] : "N/A"}</p>
         <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
         <p><strong>Region:</strong> ${country.region}</p>
-        <img src="${country.flags.png}" alt="Flag of ${country.name.common}" width="150">
+        <img src="${country.flags.svg}" alt="${country.name.common} flag">
     `;
 }
 
@@ -45,47 +45,50 @@ async function displayBorderCountries(borders) {
     }
 
     for (const code of borders) {
-        const borderData = await fetchBorderCountry(code);
-        const borderCountry = borderData[0];
+        const borderCountry = await fetchBorderCountry(code);
 
         borderingCountries.innerHTML += `
             <div>
                 <h3>${borderCountry.name.common}</h3>
-                <img src="${borderCountry.flags.png}" alt="Flag of ${borderCountry.name.common}" width="100">
+                <img src="${borderCountry.flags.svg}" alt="${borderCountry.name.common} flag">
             </div>
         `;
     }
 }
 
-async function searchCountry() {
-    const countryName = countryInput.value.trim();
-
+async function searchCountry(countryName) {
     countryInfo.innerHTML = "";
     borderingCountries.innerHTML = "";
     errorMessage.textContent = "";
+    errorMessage.classList.add("hidden");
     loadingSpinner.classList.remove("hidden");
 
     try {
-        if (countryName === "") {
+        if (!countryName || countryName.trim() === "") {
             throw new Error("Please enter a country name");
         }
 
-        const data = await fetchCountry(countryName);
+        const data = await fetchCountry(countryName.trim());
         const country = data[0];
 
         displayCountry(country);
         await displayBorderCountries(country.borders);
     } catch (error) {
         errorMessage.textContent = error.message;
+        errorMessage.classList.remove("hidden");
     } finally {
         loadingSpinner.classList.add("hidden");
     }
 }
 
-searchBtn.addEventListener("click", searchCountry);
+searchBtn.addEventListener("click", () => {
+    const countryName = countryInput.value;
+    searchCountry(countryName);
+});
 
-countryInput.addEventListener("keypress", function(event) {
+countryInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        searchCountry();
+        const countryName = countryInput.value;
+        searchCountry(countryName);
     }
 });
